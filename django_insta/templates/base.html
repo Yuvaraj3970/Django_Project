@@ -1,0 +1,121 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Django instagram</title>
+    <link rel="stylesheet" href="{% static 'css/bulma.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+    <style>
+      .badge {
+        position: absolute;
+	      top: 2px;
+	      right: -0.5px;
+	      padding: 1px 7px;
+	      border-radius: 50%;
+        color: white;
+        background-color:darkgoldenrod;
+	      font-weight: bold;
+        font-size: smaller;
+      }
+    </style>
+
+  </head>
+  <body>
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+          <a class="navbar-item" href="https://bulma.io">
+            <img src="{% static 'img/django.jpeg' %}" width="112" height="28">
+          </a>
+      
+          <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+          </a>
+        </div>
+      
+        <div id="navbarBasicExample" class="navbar-menu">
+          <div class="navbar-start">
+            <a href="{% url 'index' %}" class="navbar-item">
+            <i class="material-icons">home</i>
+              Home
+            </a>
+            
+            <a href="{% url 'show-notifications' %}" class="navbar-item">
+              <i class="material-icons">notifications</i>
+              Notifications
+              {% if count_notifications %}
+                <span class="badge">{{ count_notifications }}</span>
+              {% endif %}
+            </a>
+
+            <a href="{% url 'inbox' %}" class="navbar-item">
+              <i class="material-icons">question_answer</i>
+              Chatbox
+              {% if directs_count %}
+                <span class="badge">{{ directs_count }}</span>
+              {% endif %}
+            </a>
+
+            <a href="{% url 'profile' request.user %}" class="navbar-item">
+                <i class="material-icons">account_circle</i>
+              Profile
+            </a>
+
+            <a href="{% url 'newpost' %}" class="navbar-item">
+              <i class="material-icons">add</i>
+              Add Post
+            </a>
+            
+            <div class="navbar-item has-dropdown is-hoverable">
+              <a class="navbar-link">
+                <i class="material-icons">settings</i>
+                Settings
+              </a>
+      
+              <div class="navbar-dropdown">
+                <a href="{% url 'change_password' %}" class="navbar-item">
+                  Change Password
+                </a>
+                <a class="navbar-item">
+                  Contact Us
+                </a>
+                <a class="navbar-item">
+                  Report an issue
+                </a>
+                <hr class="navbar-divider">
+                <a href="{% url 'logout' %}" class="navbar-item">
+                  Log out
+                </a>
+              </div>
+            </div>
+  
+          </div>
+        </div>
+        <a class="navbar-item">
+          <i class="material-icons">person</i>
+          <strong>{{ request.user }}</strong>
+        </a>
+    </nav>
+
+    {% block banner %}
+    {% endblock %}
+
+    <section class="section">
+        <div class="container">
+            {% block content %}
+            {% endblock %}
+
+            {% block pagination %}
+            {% endblock %}
+        </div>
+    
+    </section>
+
+
+  </body>
+</html>
